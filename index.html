@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Presentation - Malioboro Jogja! 🛵🎨</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Casual', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #fff8e1;
+            background-image: radial-gradient(#ffb300 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            color: #3e2723;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 800px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            background: #ffffff;
+            border: 4px solid #000;
+            border-radius: 20px;
+            padding: 30px 24px;
+            box-shadow: 8px 8px 0px #000;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-header {
+            background: #d84315;
+            color: white;
+            padding: 12px 20px;
+            border: 3px solid #000;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px #000;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .slide-badge {
+            background: #ffd54f;
+            color: #000;
+            display: inline-block;
+            padding: 6px 14px;
+            border: 2px solid #000;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        .slide-body {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #3e2723;
+        }
+
+        /* GRID CARDS */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .card-item {
+            background: #fff3e0;
+            border: 3px solid #000;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        .card-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: #d84315;
+        }
+
+        /* INTERACTIVE QUIZ & GAME */
+        .quiz-opt {
+            display: block;
+            width: 100%;
+            background: #fff8e1;
+            border: 3px solid #000;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: left;
+            box-shadow: 3px 3px 0px #000;
+            font-size: 1rem;
+        }
+
+        .quiz-opt:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000;
+        }
+
+        .btn-action {
+            background: #009688;
+            color: white;
+            font-weight: 900;
+            padding: 12px 24px;
+            border: 3px solid #000;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+            font-size: 1rem;
+        }
+
+        .btn-action:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        /* GUESTBOOK */
+        .wall-input input, .wall-input textarea {
+            width: 100%;
+            padding: 10px;
+            border: 3px solid #000;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            background: #fff;
+            outline: none;
+        }
+
+        .comments-container {
+            margin-top: 15px;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+
+        .comment-box {
+            background: #fff8e1;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* NAVIGATION BAR */
+        .nav-controls {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            background: #ffffff;
+            border: 4px solid #000;
+            border-radius: 16px;
+            padding: 12px 20px;
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        .nav-btn {
+            background: #ffca28;
+            border: 3px solid #000;
+            border-radius: 10px;
+            padding: 8px 18px;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #000;
+            user-select: none;
+        }
+
+        .nav-btn:disabled {
+            background: #e0e0e0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .nav-btn:not(:disabled):active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000;
+        }
+
+        .slide-indicator {
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        
+        <!-- SLIDE 1: INTRO -->
+        <div class="slide active" id="slide-0">
+            <div class="slide-header">🍡 MALIOBORO JOGJA 🛵</div>
+            <div style="text-align: center;">
+                <span class="slide-badge">SLIDE 1 / 5 • INTRODUKSI</span>
+            </div>
+            <div class="slide-body" style="text-align: center;">
+                <p style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;">Sugeng Rawuh ing Jogja! ✨</p>
+                <p>Nikmati syahdunya malam di Jalan Malioboro! Dari alunan musik pengamen jalanan yang ramah, lampu-lampu kota yang hangat, sampai suasana lesehan yang gak bakal ditemuin di tempat lain.</p>
+                <div style="margin-top: 25px; background: #fff3e0; border: 3px dashed #f57c00; padding: 15px; border-radius: 12px; font-weight: bold;">
+                    👉 Klik tombol "Lanjut ❯" di bawah atau gunakan panah keyboard buat mulai petualangan slide!
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: SPOT WAJIB -->
+        <div class="slide" id="slide-1">
+            <div class="slide-header" style="background: #6a1b9a;">📍 SPOT WAJIB MALIOBORO</div>
+            <div style="text-align: center;">
+                <span class="slide-badge">SLIDE 2 / 5 • DESTINASI</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-weight: bold; margin-bottom: 10px;">Tempat & Atraksi Legendaris yang Wajib Dikunjungi:</p>
+                <div class="grid-cards">
+                    <div class="card-item">
+                        <h4>🛍️ Pasar Beringharjo</h4>
+                        <p style="font-size: 0.9rem;">Pusat batik murah, baju santai, dan souvenir estetik khas Jogja!</p>
+                    </div>
+                    <div class="card-item">
+                        <h4>🍡 Angkringan Lesehan</h4>
+                        <p style="font-size: 0.9rem;">Nongkrong santai pinggir jalan sambil minum Es Kampul & Nasi Kucing.</p>
+                    </div>
+                    <div class="card-item">
+                        <h4>🛺 Keliling Dokar/Andong</h4>
+                        <p style="font-size: 0.9rem;">Sensasi keliling Malioboro sampai Titik Nol Kilometer naik kereta kuda!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: MINI QUIZ -->
+        <div class="slide" id="slide-2">
+            <div class="slide-header" style="background: #26a69a;">🎯 MINI QUIZ JOGJA</div>
+            <div style="text-align: center;">
+                <span class="slide-badge">SLIDE 3 / 5 • INTERAKTIF</span>
+            </div>
+            <div class="slide-body">
+                <p style="font-weight: bold; font-size: 1.1rem;">Pertanyaan: Makanan khas Jogja dari nangka muda yang rasanya manis gurih dinamakan...</p>
+                <div style="margin-top: 15px;">
+                    <button class="quiz-opt" onclick="checkAnswer(false)">A. Pempek</button>
+                    <button class="quiz-opt" onclick="checkAnswer(true)">B. Gudeg</button>
+                    <button class="quiz-opt" onclick="checkAnswer(false)">C. Rawon</button>
+                </div>
+                <p id="quizResult" style="margin-top: 15px; font-weight: 900; font-size: 1.1rem; text-align: center;"></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: GAME KULINER -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header" style="background: #ff7043;">🎰 TAKDIR KULINER JOGJA</div>
+            <div style="text-align: center;">
+                <span class="slide-badge">SLIDE 4 / 5 • MINI GAME</span>
+            </div>
+            <div class="slide-body" style="text-align: center;">
+                <p style="font-weight: bold; margin-bottom: 15px;">Bingung mau makan apa di Malioboro? Klik tombol di bawah buat acak pilihan kulineranmu!</p>
+                <button class="btn-action" style="background: #ef5350;" onclick="spinGame()">🎲 Putar Takdir Kuliner!</button>
+                <div id="gameResult" style="margin-top: 20px; font-weight: 900; font-size: 1.25rem; color: #d84315; min-height: 40px;"></div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: CORAT CORET -->
+        <div class="slide" id="slide-4">
+            <div class="slide-header" style="background: #f57c00;">💬 CORAT-CORET JOGJA</div>
+            <div style="text-align: center;">
+                <span class="slide-badge">SLIDE 5 / 5 • BUKU TAMU</span>
+            </div>
+            <div class="slide-body">
+                <div class="wall-input">
+                    <input type="text" id="nama" placeholder="Nama / Asal Kota..." required>
+                    <textarea id="pesan" rows="2" placeholder="Tulis kenangan singkatmu di Jogja..." required></textarea>
+                    <button class="btn-action" onclick="tambahKomentar()">Kirim Cerita 🚀</button>
+                </div>
+
+                <div class="comments-container" id="commentList">
+                    <div class="comment-box">
+                        <strong>Ansel (Jakarta):</strong> Kangen banget vibes Malioboro malam hari! Dengerin pengamen jalanan sambil makan bakmi jawa ga ada tandingannya!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION CONTROLS -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>❮ Kembali</button>
+        <div class="slide-indicator" id="slideIndicator">1 / 5</div>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Lanjut ❯</button>
+    </div>
+
+    <script>
+        var currentSlideIndex = 0;
+        var totalPresentationSlides = 5;
+
+        function updateSlideView() {
+            for (var i = 0; i < totalPresentationSlides; i++) {
+                var el = document.getElementById('slide-' + i);
+                if (i === currentSlideIndex) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            }
+
+            document.getElementById('slideIndicator').innerText = (currentSlideIndex + 1) + ' / ' + totalPresentationSlides;
+            document.getElementById('prevBtn').disabled = (currentSlideIndex === 0);
+            document.getElementById('nextBtn').disabled = (currentSlideIndex === totalPresentationSlides - 1);
+        }
+
+        function changeSlide(direction) {
+            var newIndex = currentSlideIndex + direction;
+            if (newIndex >= 0 && newIndex < totalPresentationSlides) {
+                currentSlideIndex = newIndex;
+                updateSlideView();
+            }
+        }
+
+        // KEYBOARD NAVIGATION
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                changeSlide(1);
+            } else if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            }
+        });
+
+        // QUIZ FUNCTION
+        function checkAnswer(isCorrect) {
+            var result = document.getElementById('quizResult');
+            if (isCorrect) {
+                result.style.color = '#2e7d32';
+                result.innerText = "✅ Bener banget! Gudeg itu makanan khas Jogja yang paling legendaris!";
+            } else {
+                result.style.color = '#c62828';
+                result.innerText = "❌ Jawabannya kurang tepat, yuk coba pilih lagi!";
+            }
+        }
+
+        // GAME FUNCTION
+        var kulinerList = [
+            "🍡 Bakpia Pathok Cokelat & Keju",
+            "🍲 Gudeg Telur krecek pedas",
+            "☕ Kopi Joss Celup Arang Panas",
+            "🍢 Sate Klatak Kambing",
+            "🍚 Nasi Kucing Teri + Sate Usus",
+            "🍜 Bakmi Jawa Godhog Gunungkidul"
+        ];
+
+        function spinGame() {
+            var randomIndex = Math.floor(Math.random() * kulinerList.length);
+            document.getElementById('gameResult').innerText = "✨ Hasil Acak: " + kulinerList[randomIndex];
+        }
+
+        // COMMENT FUNCTION
+        function tambahKomentar() {
+            var nama = document.getElementById('nama').value;
+            var pesan = document.getElementById('pesan').value;
+
+            if (nama.trim() === "" || pesan.trim() === "") {
+                alert("Isi nama sama ceritanya dulu ya!");
+                return;
+            }
+
+            var container = document.getElementById('commentList');
+            var boxBaru = document.createElement('div');
+            boxBaru.className = 'comment-box';
+            boxBaru.innerHTML = '<strong>' + nama + ':</strong> ' + pesan;
+
+            container.prepend(boxBaru);
+
+            document.getElementById('nama').value = '';
+            document.getElementById('pesan').value = '';
+        }
+
+        window.onload = function() {
+            updateSlideView();
+        };
+    </script>
+</body>
+</html>
